@@ -1,0 +1,45 @@
+extends layout
+
+block content
+    div.mdl-grid
+        div.mdel-cell.mdl-cell--6-col
+            each item in alarms
+                div.mdl-card.mdl-shadow--4dp
+                    div.mdl-card__title
+                        h2.mdl-card__title-text=item.name
+                    div.mdl-card__supporting-text
+                        span="Läutet um "
+                        div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                            input.mdl-textfield__input(
+                                type="text"
+                                pattern="-?[0-9]*(\.[0-9]+)?"
+                                id="hour" + item._id
+                                value=item.hour
+                                onchange="update('" + item._id + "');"
+                            )
+                            label.mdl-textfield__label(for="hour" + item._id)="Stunde"
+                        div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                            input.mdl-textfield__input(
+                                type="text"
+                                pattern="-?[0-9]*(\.[0-9]+)?"
+                                id="minute" + item._id
+                                value=item.minute
+                                onchange="update('" + item._id + "');"
+                            )
+                            label.mdl-textfield__label(for="minute" + item._id)="Minute"
+
+
+    script.
+        function update(id){
+            var hour = parseInt($("#hour" + id).val());
+            var minute = parseInt($("#minute" + id).val());
+            $.ajax({
+                    method: 'PUT',
+                    url: '/api/coffee/' + id,
+                    data:{
+                        hour: hour,
+                        minute: minute
+                    }
+                }
+            );
+        }
