@@ -8,7 +8,8 @@ module.exports = {
         var minute = date.getMinutes();
 
         function closePins() {
-            gpio.setup(17, gpio.DIR_LOW, gpio.destroy);
+            gpio.setup(17, gpio.DIR_LOW);
+            gpio.destroy();
         }
 
         function pause() {
