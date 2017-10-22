@@ -23,12 +23,12 @@ module.exports = {
 
                 if(result.fired === undefined || result.fired === null || result.fired === false){
                     gpio.open(pin, gpio.OUTPUT);
-                    console.log("LOW");
-                    gpio.write(pin, gpio.LOW);
+                    console.log("HIGH");
+                    gpio.write(pin, gpio.HIGH);
 
                     setTimeout(function () {
-                       gpio.write(pin, gpio.HIGH);
-                        console.log("HIGH");
+                       gpio.write(pin, gpio.LOW);
+                        console.log("LOW");
                        gpio.close(pin, gpio.PIN_RESET);
                     }, 500);
                     coffeeFacade.update(result._id, {fired: true});
