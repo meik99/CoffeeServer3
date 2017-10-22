@@ -4,7 +4,7 @@ var gpio = require("rpio");
 var options = {
     gpiomem: true,
     mapping: "gpio",
-    mock: "raspi-b+"
+    mock: undefined
 };
 
 gpio.init(options);
@@ -27,7 +27,7 @@ module.exports = {
                     setTimeout(function () {
                        gpio.write(pin, gpio.LOW);
                        gpio.close(pin, gpio.PIN_RESET);
-                    });
+                    }, 500);
                     coffeeFacade.update(result._id, {fired: true});
                 }
             }else{
