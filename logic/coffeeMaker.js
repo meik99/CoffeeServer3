@@ -1,7 +1,13 @@
 var coffeeFacade = require("./facades/coffeeFacade");
-var gpio = require("rpi-gpio");
+var gpio = require("rpio");
 
-gpio.setMode(gpio.MODE_BCM);
+var options = {
+    gpiomem: true,
+    mapping: "gpio",
+    mock: "raspi-b+"
+};
+
+gpio.init(options);
 
 var pin = 4;
 
@@ -11,31 +17,17 @@ module.exports = {
         var hour = date.getHours();
         var minute = date.getMinutes();
 
-        function closePins() {
-            gpio.write(pin, false, function (err) {
-                if(err) throw err;
-                console.log("End making coffee")
-            });
-            gpio.destroy();
-        }
-
-        function pause() {
-            console.log("Making coffee");
-
-            gpio.write(pin, true, function(err){
-                if(err) throw err;
-                console.log("Written to pin");
-                setTimeout(closePins, 36000);
-            });
-        }
-
         coffeeFacade.getByFilter({hour: hour, minute: minute}, function (result) {
             if(result.length > 0){
                 var result = result[0];
 
                 if(result.fired === undefined || result.fired === null || result.fired === false){
-                    gpio.setup(pin, gpio.DIR_OUT, pause);
+                    gpio.open(pin, gpio.OUTPUT, gpio.HIGH);
 
+                    setTimeout(function () {
+                       gpio.write(pin, gpio.LOW);
+                       gpio.close(pin, gpio.PIN_RESET);
+                    });
                     coffeeFacade.update(result._id, {fired: true});
                 }
             }else{
