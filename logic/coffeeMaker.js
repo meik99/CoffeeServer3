@@ -1,6 +1,8 @@
 var coffeeFacade = require("./facades/coffeeFacade");
 var gpio = require("rpi-gpio");
 
+gpio.setMode(gpio.MODE_BCM);
+
 module.exports = {
     updateAlarms: function(){
         var date = new Date();
@@ -8,7 +10,7 @@ module.exports = {
         var minute = date.getMinutes();
 
         function closePins() {
-            gpio.setup(17, gpio.DIR_LOW);
+            gpio.setup(4, gpio.DIR_LOW);
             gpio.destroy();
         }
 
@@ -21,11 +23,7 @@ module.exports = {
                 var result = result[0];
 
                 if(result.fired === undefined || result.fired === null || result.fired === false){
-                    try{
-                        gpio.setup(17, gpio.DIR_HIGH, pause);
-                    }catch(e){
-                        console.log("Could not start pin. Maybe not a raspberry?");
-                    }
+                    gpio.setup(17, gpio.DIR_HIGH, pause);
 
                     coffeeFacade.update(result._id, {fired: true});
                 }
