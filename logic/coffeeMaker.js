@@ -3,6 +3,8 @@ var gpio = require("rpi-gpio");
 
 gpio.setMode(gpio.MODE_BCM);
 
+var pin = 4;
+
 module.exports = {
     updateAlarms: function(){
         var date = new Date();
@@ -10,12 +12,21 @@ module.exports = {
         var minute = date.getMinutes();
 
         function closePins() {
-            gpio.setup(4, gpio.DIR_LOW);
+            gpio.write(pin, false, function (err) {
+                if(err) throw err;
+                console.log("End making coffee")
+            });
             gpio.destroy();
         }
 
         function pause() {
-            setTimeout(closePins, 36000);
+            console.log("Making coffee");
+
+            gpio.write(pin, true, function(err){
+                if(err) throw err;
+                console.log("Written to pin");
+                setTimeout(closePins, 36000);
+            });
         }
 
         coffeeFacade.getByFilter({hour: hour, minute: minute}, function (result) {
@@ -23,7 +34,7 @@ module.exports = {
                 var result = result[0];
 
                 if(result.fired === undefined || result.fired === null || result.fired === false){
-                    gpio.setup(17, gpio.DIR_HIGH, pause);
+                    gpio.setup(pin, gpio.DIR_OUT, pause);
 
                     coffeeFacade.update(result._id, {fired: true});
                 }
