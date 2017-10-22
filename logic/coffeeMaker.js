@@ -22,10 +22,13 @@ module.exports = {
                 var result = result[0];
 
                 if(result.fired === undefined || result.fired === null || result.fired === false){
-                    gpio.open(pin, gpio.OUTPUT, gpio.HIGH);
+                    gpio.open(pin, gpio.OUTPUT);
+                    console.log("LOW");
+                    gpio.write(pin, gpio.LOW);
 
                     setTimeout(function () {
-                       gpio.write(pin, gpio.LOW);
+                       gpio.write(pin, gpio.HIGH);
+                        console.log("HIGH");
                        gpio.close(pin, gpio.PIN_RESET);
                     }, 500);
                     coffeeFacade.update(result._id, {fired: true});
