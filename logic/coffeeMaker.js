@@ -4,7 +4,7 @@ var gpio = require("rpio");
 var options = {
     gpiomem: true,
     mapping: "gpio",
-    mock: undefined
+    mock: "raspi-b+"
 };
 
 gpio.init(options);
@@ -21,18 +21,21 @@ module.exports = {
             if(result.length > 0){
                 var result = result[0];
 
-                if(result.fired === undefined || result.fired === null || result.fired === false){
-                    gpio.open(pin, gpio.OUTPUT);
-                    console.log("HIGH");
-                    gpio.write(pin, gpio.HIGH);
+                if(result.stopped === undefined || result.stopped === null || result.stopped === false){
+                    if(result.fired === undefined || result.fired === null || result.fired === false){
+                        gpio.open(pin, gpio.OUTPUT);
+                        console.log("HIGH");
+                        gpio.write(pin, gpio.HIGH);
 
-                    setTimeout(function () {
-                       gpio.write(pin, gpio.LOW);
-                        console.log("LOW");
-                       gpio.close(pin, gpio.PIN_RESET);
-                    }, 500);
-                    coffeeFacade.update(result._id, {fired: true});
+                        setTimeout(function () {
+                            gpio.write(pin, gpio.LOW);
+                            console.log("LOW");
+                            gpio.close(pin, gpio.PIN_RESET);
+                        }, 500);
+                        coffeeFacade.update(result._id, {fired: true, stopped: false});
+                    }
                 }
+
             }else{
                 coffeeFacade.updateAll({fired: false});
             }

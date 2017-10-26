@@ -54,5 +54,22 @@ module.exports = {
                     next(result);
             });
         });
+    },
+    remove: function (id, next) {
+        db(function (database) {
+           database.collection("alarm").deleteOne({_id: ObjectId(id)}, function (err, result) {
+               if(err) throw err;
+
+               if(next) next(result);
+           });
+        });
+    },
+    insert: function (data, next) {
+        db(function (database) {
+           database.collection("alarm").insertOne(data, null, function (err, result) {
+               if(err) throw err;
+               if(next) next(result);
+           });
+        });
     }
 };

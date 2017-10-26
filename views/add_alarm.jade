@@ -1,0 +1,43 @@
+block add_alarm
+    div.mdl-card.mdl-shadow--2dp
+        div.mdl-card__title
+            h2.mdl-card__title-text= "Alarm hinzufügen"
+        div.mdl-card__supporting-text
+            div.mdl-textfield.mdl-textfield--floating-label.mdl-js-textfield
+                input.mdl-textfield__input(id="addName")
+                label.mdl-textfield__label(for="addName")= "Name"
+            div.mdl-textfield.mdl-textfield--floating-label.mdl-js-textfield
+                input.mdl-textfield__input(id="addHour"
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?")
+                label.mdl-textfield__label(for="addHour")= "Stunde"
+            div.mdl-textfield.mdl-textfield--floating-label.mdl-js-textfield
+                input.mdl-textfield__input(id="addMinute"
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?")
+                label.mdl-textfield__label(for="addMinute")= "Minute"
+        div.mdl-card__actions
+            button.mdl-button.mdl-js-button.mdl-button--accent(onclick="insert()")= "Hinzufügen"
+
+    script.
+        function insert() {
+            var name = $("#addName").val();
+            var hour = parseInt($("#addHour").val());
+            var minute = parseInt($("#addMinute").val());
+
+            var data = {
+                name: name,
+                hour: hour,
+                minute: minute
+            };
+
+            $.ajax({
+                url: "/api/coffee/",
+                method: "POST",
+                data: data
+            }).done(function () {
+                location.reload();
+            }).fail(function () {
+                alert("Didn't work, mate");
+            });
+        }
