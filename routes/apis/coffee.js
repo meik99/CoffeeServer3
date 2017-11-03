@@ -6,6 +6,7 @@
  */
 var express = require("express");
 var coffeeFacade = require("../../logic/facades/coffeeFacade");
+var coffeeMaker = require("../../logic/coffeeMaker");
 var router = express.Router();
 
 
@@ -13,6 +14,11 @@ router.get("/", function (req, res) {
     coffeeFacade.get(function (result) {
         res.send(result);
     });
+});
+
+router.get("/now", function (req, res) {
+    coffeeMaker.makeCoffee();
+    res.send({result: "Making coffee"});
 });
 
 router.put("/:id", function (req, res) {

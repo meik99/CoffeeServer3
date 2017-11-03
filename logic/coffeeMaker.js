@@ -23,15 +23,7 @@ module.exports = {
 
                 if(result.stopped === undefined || result.stopped === null || result.stopped === false){
                     if(result.fired === undefined || result.fired === null || result.fired === false){
-                        gpio.open(pin, gpio.OUTPUT);
-                        console.log("HIGH");
-                        gpio.write(pin, gpio.HIGH);
-
-                        setTimeout(function () {
-                            gpio.write(pin, gpio.LOW);
-                            console.log("LOW");
-                            gpio.close(pin, gpio.PIN_RESET);
-                        }, 500);
+                        this.makeCoffee();
                         coffeeFacade.update(result._id, {fired: true, stopped: false});
                     }
                 }
@@ -40,5 +32,17 @@ module.exports = {
                 coffeeFacade.updateAll({fired: false});
             }
         });
+    },
+
+    makeCoffee: function(){
+        gpio.open(pin, gpio.OUTPUT);
+        console.log("HIGH");
+        gpio.write(pin, gpio.HIGH);
+
+        setTimeout(function () {
+            gpio.write(pin, gpio.LOW);
+            console.log("LOW");
+            gpio.close(pin, gpio.PIN_RESET);
+        }, 500);
     }
 };
