@@ -36,7 +36,7 @@ block add_alarm
                 method: "POST",
                 data: data
             }).done(function () {
-                location.reload();
+                reloadAlarms();
             }).fail(function () {
                 alert("Didn't work, mate");
             });

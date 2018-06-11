@@ -4,60 +4,6 @@ block content
     div.mdl-grid
         div.mdl-cell.mdl-cell--6-col-desktop.mdl-cell--6-col-tablet.mdl-cell--12-col-phone
             include add_alarm
-        div.mdl-cell.mdl-cell--6-col-desktop.mdl-cell--6-col-tablet.mdl-cell--12-col-phone
-            each item in alarms
-                div.mdl-card.mdl-shadow--2dp
-                    div.mdl-card__title
-                        div.mdl-card__title-text
-                            h2= item.name
-                            //div.mdl-checkbox.mdl-js-checkbox
-                            //    input.mdl-checkbox__input(id="stop" + item._id)
-                            //    label.mdl-checkbox__label(for="stop" + item._id)= "Stop"
-                    div.mdl-card__supporting-text
-                        span="Läutet um "
-                        div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-                            input.mdl-textfield__input(
-                                type="text"
-                                pattern="-?[0-9]*(\.[0-9]+)?"
-                                id="hour" + item._id
-                                value=item.hour
-                                onchange="update('" + item._id + "');"
-                            )
-                            label.mdl-textfield__label(for="hour" + item._id)="Stunde"
-                        div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-                            input.mdl-textfield__input(
-                                type="text"
-                                pattern="-?[0-9]*(\.[0-9]+)?"
-                                id="minute" + item._id
-                                value=item.minute
-                                onchange="update('" + item._id + "');"
-                            )
-                            label.mdl-textfield__label(for="minute" + item._id)="Minute"
-                    div.mdl-card__actions
-                        button.mdl-button.mdl-js-button.mdl-button--accent(onclick="remove('"+ item._id + "')")= "Entfernen"
+        div#alarmList.mdl-cell.mdl-cell--6-col-desktop.mdl-cell--6-col-tablet.mdl-cell--12-col-phone
+            include alarm_list
 
-
-    script.
-        function update(id){
-            var hour = parseInt($("#hour" + id).val());
-            var minute = parseInt($("#minute" + id).val());
-            $.ajax({
-                    method: 'PUT',
-                    url: '/api/coffee/' + id,
-                    data:{
-                        hour: hour,
-                        minute: minute
-                    }
-                }
-            );
-        }
-
-        function remove(id){
-            $.ajax({
-                    method: 'DELETE',
-                    url: '/api/coffee/' + id
-                }
-            ).done(function () {
-                location.reload();
-            });
-        }

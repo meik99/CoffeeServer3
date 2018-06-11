@@ -7,22 +7,23 @@ html
     link(rel='stylesheet', href='/stylesheets/material-icons.css')
     script(src="/javascripts/jquery-3.2.1.min.js")
     script(src="/javascripts/material.min.js")
+    script(src="/javascripts/script.js")
   body
     div.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
       header.mdl-layout__header
         div.mdl-layout__header-row
 
-          span.mdl-layout-title="Kaffee"
+          span.mdl-layout-title(onclick="location.href='/'")="Kaffee"
 
-        div.mdl-layout-spacer
 
-      nav.mdl-navigation.mdl-layout--large-screen-only
-      //<a class="mdl-navigation__link" href="">Link</a>
+          nav.mdl-navigation.mdl-layout--large-screen-only
+              a.mdl-navigation__link(href="/options")= "Options"
+          div.mdl-layout-spacer
 
       div.mdl-layout__drawer
-        span.mdl-layout-title="Kaffee"
+        span.mdl-layout-title(onclick="location.href='/'")="Kaffee"
         nav.mdl-navigation
-        //a class="mdl-navigation__link" href="">Link</a>
+            a.mdl-navigation__link(href="/options")= "Options"
 
       main.mdl-layout__content
         div.page-content

@@ -1,0 +1,34 @@
+mixin alarm(item)
+    div.mdl-card.mdl-shadow--2dp
+        div.mdl-card__title
+            div.mdl-card__title-text
+                h2= item.name
+                //div.mdl-checkbox.mdl-js-checkbox
+                //    input.mdl-checkbox__input(id="stop" + item._id)
+                //    label.mdl-checkbox__label(for="stop" + item._id)= "Stop"
+        div.mdl-card__supporting-text
+            span="Läutet um "
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?"
+                id="hour" + item._id
+                value=item.hour
+                onchange="update('" + item._id + "');"
+                )
+                label.mdl-textfield__label(for="hour" + item._id)="Stunde"
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?"
+                id="minute" + item._id
+                value=item.minute
+                onchange="update('" + item._id + "');"
+                )
+                label.mdl-textfield__label(for="minute" + item._id)="Minute"
+        div.mdl-card__actions
+            button.mdl-button.mdl-js-button.mdl-button--accent(onclick="remove('" + item._id + "')")= "Entfernen"
+
+block alarm_list
+    each item in alarms
+        +alarm(item)

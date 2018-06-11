@@ -4,7 +4,7 @@ var gpio = require("rpio");
 var options = {
     gpiomem: true,
     mapping: "gpio",
-    mock: undefined
+    mock: "raspi-b+"
 };
 
 gpio.init(options);
