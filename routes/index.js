@@ -9,4 +9,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get("/options", function (req, res) {
+   res.render("options")
+});
+
 module.exports = router;

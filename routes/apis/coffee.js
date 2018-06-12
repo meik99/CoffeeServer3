@@ -17,7 +17,6 @@ router.get("/", function (req, res) {
 });
 
 router.get("/asList", function(req, res) {
-    console.log("Called");
     coffeeFacade.get(function (result) {
        res.render("alarm_list", {alarms: result});
     });

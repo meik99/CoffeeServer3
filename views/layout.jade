@@ -2,12 +2,11 @@ doctype html
 html
   head
     title= title
-    //link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/material.min.css')
     link(rel='stylesheet', href='/stylesheets/material-icons.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="/javascripts/jquery-3.2.1.min.js")
     script(src="/javascripts/material.min.js")
-    script(src="/javascripts/script.js")
   body
     div.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
       header.mdl-layout__header
@@ -28,10 +27,8 @@ html
       main.mdl-layout__content
         div.page-content
           block content
-  script.
-    - function(){
-        var nodes = document.getElementsByTagName("*");
-        componentHandler.upgradeElements(nodes);
-    }();
+
+      script(src="/javascripts/script.js")
+
 
 

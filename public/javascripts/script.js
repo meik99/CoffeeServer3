@@ -4,6 +4,7 @@ function reloadAlarms(){
         method: "GET"
     }).done(function (result) {
         $("#alarmList").html(result);
+        upgradeElements();
     }).fail(function () {
         alert("Didn't work, mate");
     });
@@ -32,3 +33,10 @@ function remove(id){
         reloadAlarms();
     });
 }
+
+function upgradeElements(){
+    var nodes = document.getElementsByTagName("*");
+    componentHandler.upgradeElements(nodes);
+}
+
+upgradeElements();
