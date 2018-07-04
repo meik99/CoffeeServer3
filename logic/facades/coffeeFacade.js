@@ -11,7 +11,7 @@ module.exports = {
                 if(err) throw err;
 
                 if(next)
-                    next(result);
+                    next(result, database);
             });
         })
     },
@@ -21,7 +21,7 @@ module.exports = {
                 if(err) throw err;
 
                 if(next)
-                    next(result);
+                    next(result, database);
             });
         })
     },
@@ -31,7 +31,7 @@ module.exports = {
                 if(err) throw err;
 
                 if(next)
-                    next(result);
+                    next(result, database);
             });
         })
     },
@@ -40,8 +40,10 @@ module.exports = {
            database.collection("alarm").updateOne({_id: ObjectId(id)}, {$set: data}, function (err, result) {
                if(err) throw err;
 
+               database.close();
+
                if(next)
-                   next(result);
+                   next();
            });
         });
     },
@@ -50,8 +52,10 @@ module.exports = {
             database.collection("alarm").updateMany({}, {$set: data}, function (err, result) {
                 if(err) throw err;
 
+                database.close();
+
                 if(next)
-                    next(result);
+                    next();
             });
         });
     },
@@ -60,7 +64,10 @@ module.exports = {
            database.collection("alarm").deleteOne({_id: ObjectId(id)}, function (err, result) {
                if(err) throw err;
 
-               if(next) next(result);
+               database.close();
+
+               if(next)
+                   next();
            });
         });
     },
@@ -68,7 +75,11 @@ module.exports = {
         db(function (database) {
            database.collection("alarm").insertOne(data, null, function (err, result) {
                if(err) throw err;
-               if(next) next(result);
+
+               database.close();
+               
+               if(next)
+                   next();
            });
         });
     }

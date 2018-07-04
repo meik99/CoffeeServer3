@@ -17,7 +17,7 @@ module.exports = {
         var hour = date.getHours();
         var minute = date.getMinutes();
 
-        coffeeFacade.getByFilter({hour: hour, minute: minute}, function (result) {
+        coffeeFacade.getByFilter({hour: hour, minute: minute}, function (result, database) {
             if(result.length > 0){
                 var result = result[0];
 
